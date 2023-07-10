@@ -9,7 +9,7 @@ from user import User
 bot = Bot(TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 main_dict = [[],  # str
-             [],  # bool
+             [],
              []]
 user_mapping = dict()
 user_mapping: dict[int, User]
