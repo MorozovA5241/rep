@@ -10,7 +10,7 @@ bot = Bot(TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 main_dict = [[],  # str
              [],  # bool
-             []]  # str
+             []]
 user_mapping = dict()
 user_mapping: dict[int, User]
 
