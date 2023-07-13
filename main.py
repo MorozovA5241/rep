@@ -123,13 +123,17 @@ async def delete_task_finish(call: types.CallbackQuery, callback_data: dict):
 @dp.message_handler(Text("Поставить напоминание"), state=Ourstates.main_state)
 async def start_timer(message: types.Message):
     user_id = message.from_id
-    if len(user_mapping[user_id].main_dict[0])==0:
-        await message.answer("задач нет :(", reply_markup=get_main_menu())
+    if(user_mapping[user_id].alarm_state==True):
+        await message.answer("к сожелению я не могу ставить больше одного будильника")
         await Ourstates.main_state.set()
     else:
-        inline_kb = inline_button(len(user_mapping[user_id].main_dict[0]))
-        await message.answer("Выбери задачу", reply_markup=inline_kb)
-        await Ourstates.remid_state.set()
+        if len(user_mapping[user_id].main_dict[0])==0:
+            await message.answer("задач нет :(", reply_markup=get_main_menu())
+            await Ourstates.main_state.set()
+        else:
+            inline_kb = inline_button(len(user_mapping[user_id].main_dict[0]))
+            await message.answer("Выбери задачу", reply_markup=inline_kb)
+            await Ourstates.remid_state.set()
 
 
 @dp.callback_query_handler(task_callback_data.filter(), state=Ourstates.remid_state)
@@ -152,12 +156,10 @@ async def set_timer(message: types.Message):
     except ValueError:
         await message.reply("Неверный формат времени! Используйте ЧЧ:ММ.")
         return
-
-    user_mapping[user_id].alarm = alarm_time
-    await message.answer("будильник установлен жди и бойся")
-    dict=user_mapping[user_id].main_dict[1]
-    dict.append(alarm_time)
-    user_mapping[user_id].main_dict[1]=dict
+    user_mapping[user_id].main_dict[1][user_mapping[user_id].del_num] = alarm_time
+    user_mapping[user_id].alarm=alarm_time
+    await message.answer("будильник установлен жди и бойся", reply_markup=get_main_menu())
+    user_mapping[user_id].alarm_state=True
     await Ourstates.main_state.set()
 
 
@@ -173,6 +175,8 @@ async def check_alarms():
                     await bot.send_message(user_id,
                                            f"Пора {user_mapping[user_id].main_dict[0][user_mapping[user_id].del_num]}")
                     user_mapping[user_id].alarm = None  # Удаление будильника после срабатывания
+                    user_mapping[user_id].main_dict[1][user_mapping[user_id].del_num]=None
+                    user_mapping[user_id].alarm_state=False
         await asyncio.sleep(5)  # Проверка каждую минуту
 
 
