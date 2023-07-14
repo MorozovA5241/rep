@@ -118,7 +118,7 @@ async def delete_task_finish(call: types.CallbackQuery, callback_data: dict):
 
     for i in range(3):
         del_dict = user_mapping[user_id].main_dict
-        del del_dict[i][number - 1]
+        del del_dict[i][number]
     await bot.send_message(chat_id=user_id, text="задача удалена", reply_markup=get_main_menu())
     await Ourstates.main_state.set()
 
