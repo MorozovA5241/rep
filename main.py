@@ -9,12 +9,14 @@ import random
 from user import User
 from inline import inline_button, task_callback_data
 import datetime
+from pathlib import Path
 
 bot = Bot(TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 user_mapping = dict()
 user_mapping: dict[int, User]
-picture = ['picture/1.jpg', 'picture/2.jpg', 'picture/3.jpg', 'picture/4.jpg', 'picture/5.jpg']
+picture = [Path('picture/1.jpg'), Path('picture/2.jpg'), Path('picture/3.jpg'), Path('picture/4.jpg'),
+           Path('picture/5.jpg')]
 storge = MemoryStorage()
 
 
@@ -196,4 +198,3 @@ if __name__ == "__main__":
         executor.start_polling(dp, skip_updates=True, loop=loop)
     finally:
         loop.close()
-
