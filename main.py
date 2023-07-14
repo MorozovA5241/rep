@@ -9,11 +9,12 @@ import random
 from user import User
 from inline import inline_button, task_callback_data
 import datetime
+
 bot = Bot(TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 user_mapping = dict()
 user_mapping: dict[int, User]
-picture = ['C:\quote\\1.jpg', 'C:\quote\\2.jpg', 'C:\quote\\3.jpg', 'C:\quote\\4.jpg', 'C:\quote\\5.jpg']
+picture = ['picture\\1.jpg', 'picture\\2.jpg', 'picture\\3.jpg', 'picture\\4.jpg', 'picture\\5.jpg']
 storge = MemoryStorage()
 
 
@@ -166,6 +167,7 @@ async def set_timer(message: types.Message):
     user_mapping[user_id].alarm_state = True
     await Ourstates.main_state.set()
 
+
 async def check_alarms():
     while True:
 
@@ -194,3 +196,4 @@ if __name__ == "__main__":
         executor.start_polling(dp, skip_updates=True, loop=loop)
     finally:
         loop.close()
+
