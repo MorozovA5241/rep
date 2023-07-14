@@ -14,7 +14,7 @@ bot = Bot(TOKEN)
 dp = Dispatcher(bot, storage=MemoryStorage())
 user_mapping = dict()
 user_mapping: dict[int, User]
-picture = ['picture\\1.jpg', 'picture\\2.jpg', 'picture\\3.jpg', 'picture\\4.jpg', 'picture\\5.jpg']
+picture = ['picture/1.jpg', 'picture/2.jpg', 'picture/3.jpg', 'picture/4.jpg', 'picture/5.jpg']
 storge = MemoryStorage()
 
 
